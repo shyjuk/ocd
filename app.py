@@ -37,7 +37,7 @@ def articles():
     cur = mysql.connection.cursor()
 
     # Get articles
-    result = cur.execute("SELECT * FROM call_lists")
+    result = cur.execute("SELECT * FROM call_list")
 
     articles = cur.fetchall()
 
@@ -169,7 +169,7 @@ def dashboard():
     cur = mysql.connection.cursor()
 
     # Get articles
-    result = cur.execute("SELECT * FROM call_lists")
+    result = cur.execute("SELECT * FROM call_list")
 
     articles = cur.fetchall()
 
