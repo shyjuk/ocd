@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 # Config MySQL
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'appuser'
-app.config['MYSQL_PASSWORD'] = 'flapass'
-app.config['MYSQL_DB'] = 'myflaskapp'
+app.config['MYSQL_USER'] = 'ocduser'
+app.config['MYSQL_PASSWORD'] = 'ocdpass'
+app.config['MYSQL_DB'] = 'ocd'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # init MYSQL
 mysql = MySQL(app)
@@ -37,7 +37,7 @@ def articles():
     cur = mysql.connection.cursor()
 
     # Get articles
-    result = cur.execute("SELECT * FROM articles")
+    result = cur.execute("SELECT * FROM call_lists")
 
     articles = cur.fetchall()
 
@@ -59,7 +59,7 @@ def article(id):
     # Get article
     result = cur.execute("SELECT * FROM articles WHERE id = %s", [id])
 
-    article = cur.fetchone()
+    article = result.fetchone()
 
     return render_template('article.html', article=article)
 
@@ -169,7 +169,7 @@ def dashboard():
     cur = mysql.connection.cursor()
 
     # Get articles
-    result = cur.execute("SELECT * FROM articles")
+    result = cur.execute("SELECT * FROM call_lists")
 
     articles = cur.fetchall()
 
