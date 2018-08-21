@@ -1,6 +1,6 @@
 # OCD
 
-A basic application for automatic call distribution based on a uploaded call distribution list.
+A basic application for automatic outbound call distribution based on a uploaded call distribution list.
 Based on Asterisk PBX and it's ARI functionality, Flask and MySQL.
 
 Basic functionalities:
