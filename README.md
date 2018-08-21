@@ -1,4 +1,4 @@
-# OCD - Outbound Call distributor
+# OCD - Outbound Call Distributor
 
 A basic application for automatic outbound call distribution based on a uploaded call distribution list.
 Based on Asterisk PBX and it's ARI functionality, Flask and MySQL.
