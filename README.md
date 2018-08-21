@@ -1,33 +1,29 @@
-# FlaskApp
+# OCD
 
-Simple application with authentication and CRUD functionality using the Python Flask micro-framework
+A basic application for automatic call distribution based on a uploaded call distribution list.
+Based on Asterisk PBX and it's ARI functionality, Flask and MySQL.
 
-## Youtube Link
-- [Python Flask From Scratch - Getting Started](https://www.youtube.com/watch?v=zRwy8gtgJ1A)
-
-## Installation
-
-To use this template, your computer needs:
-
-- [Python 2 or 3](https://python.org)
-- [Pip Package Manager](https://pypi.python.org/pypi)
+Basic functionalities:
+- Upload a CSV list. (Fields: Name, Phone)
+- Upload sound files.
+- Start a outbound call campain using the uploaded list & sound files.
+- Current call status
+- Report. (Fields: Phone, Status, Reason,Call Duration)
+- Settings. (Asterisk & ARI settings)
 
 ## Install dependencies
 
-Install dependencies with below commands:
-
-- pip install flask 
-- pip install flask-mysqldb
-- pip install flask-WTF
-- pip install passlib
+Clone the repo and run the below command from the repo
+- sudo pip install -r requirements.txt
 
 ## MySQL Commands
-- create database myflaskapp;
-- use myflaskapp;
+- create database ocd;
+- use ocd;
 - create table users(id INT(10) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50), email VARCHAR(100), username VARCHAR(30), password VARCHAR(100), register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 - create table articles ( id  INT(11) AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255), author VARCHAR(100), body TEXT, create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-- CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'flapass';
-- GRANT ALL PRIVILEGES ON myflaskapp.* TO 'appuser'@'localhost';
+
+- CREATE USER 'ocduser'@'localhost' IDENTIFIED BY 'ocdpass';
+- GRANT ALL PRIVILEGES ON ocd.* TO 'ocduser'@'localhost';
 - 
 ## Configure app.py
 - Edit app.py and add the MySQL credentials created above.
