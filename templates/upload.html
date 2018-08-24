@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Upload Call Lists</h1>
+  {% from "includes/_formhelpers.html" import render_field %}
+  <form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      {{render_field(form.file, class_="form-control")}}
+      {{ form.csrf_token }}
+      <!-- {{ form.file}} -->
+    </div>
+    <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+  </form>
+{% endblock %}

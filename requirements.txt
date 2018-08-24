@@ -27,3 +27,4 @@ flask
 flask-mysqldb
 flask-WTF
 passlib
+pyexcel-xls
