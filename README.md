@@ -27,7 +27,7 @@ Clone the repo and run the below command from the repo
 - GRANT ALL PRIVILEGES ON ocd.* TO 'ocduser'@'localhost';
 - 
 ## Configure app.py
-- Edit app.py and add the MySQL credentials created above.
+- Edit app.py with MySQL credentials.
 
 ### Running the app
 

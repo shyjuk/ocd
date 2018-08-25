@@ -63,18 +63,30 @@ def articles():
     cur.close()
 
 
-#Single Article
+#Single Call list
 @app.route('/article/<string:id>/')
 def article(id):
     # Create cursor
     cur = mysql.connection.cursor()
 
-    # Get article
-    result = cur.execute("SELECT * FROM articles WHERE id = %s", [id])
+    # Get call list name
+    result = cur.execute("SELECT title FROM call_list WHERE id = %s", [id])
 
-    article = result.fetchone()
+    article = cur.fetchone()
+    call_list_name = article['title']
 
-    return render_template('article.html', article=article)
+    # Get call list details
+    result = cur.execute("SELECT * FROM "+call_list_name)
+
+    call_lists = cur.fetchall()
+
+    if result > 0:
+        return render_template('calllist.html', calllists=call_lists, listname=call_list_name)
+    else:
+        msg = 'No Call list Found'
+        return render_template('calllist.html', msg=msg)
+
+    return render_template('calllist.html', calllists=call_lists, listname=call_list_name)
 
 
 # Register Form Class
@@ -159,8 +171,8 @@ def upload():
         cursor.close()
         # Commit the transaction
         mysql.connection.commit()
-
-        return render_template('calllist.html', articles=call_lists)
+        flash('Call list '+tablename+' Uploaded', 'success')
+        return render_template('calllists.html', articles=call_lists)
     return render_template('upload.html', form=form)
 
 # User login
@@ -253,10 +265,10 @@ def calllist():
     call_lists = cur.fetchall()
 
     if result > 0:
-        return render_template('calllist.html', articles=call_lists)
+        return render_template('calllists.html', articles=call_lists)
     else:
         msg = 'No Call lists Found'
-        return render_template('calllist.html', msg=msg)
+        return render_template('calllists.html', msg=msg)
     # Close connection
     cur.close()
 
@@ -346,11 +358,12 @@ def delete_article(id):
     data = cur.fetchone()
     table_name = data['title']
 
+    # Execute
+    cur.execute("DELETE FROM call_list WHERE id = %s", [id])
+    
     #Delete Table
     cur.execute("DROP TABLE "+ table_name)
     # print "+++++++++++++++++++"
-    # Execute
-    cur.execute("DELETE FROM call_list WHERE id = %s", [id])
 
     # Commit to DB
     mysql.connection.commit()
@@ -361,6 +374,39 @@ def delete_article(id):
     flash('Call list '+table_name+' Deleted', 'success')
 
     return redirect(url_for('dashboard'))
+    
+# Delete Indivial item from a call list
+@app.route('/delete_single/<string:listname>/<string:id>', methods=['POST'])
+@is_logged_in
+def delete_single(listname,id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    #Delete Single item
+    cur.execute("DELETE FROM "+listname+" WHERE id = %s", [id])
+
+    # Commit to DB
+    mysql.connection.commit()
+
+    # Get call list details
+    result = cur.execute("SELECT * FROM "+listname)
+
+    call_lists = cur.fetchall()
+    
+    flash('One contact deleted from call list '+listname, 'success')
+    if result > 0:
+
+        return render_template('calllist.html', calllists=call_lists, listname=listname)
+    else:
+        msg = 'Empty list'
+        return render_template('calllist.html', msg=msg)
+
+    return render_template('calllist.html', calllists=call_lists, listname=listname)
+    #Close connection
+    cur.close()
+
+
+
 
 if __name__ == '__main__':
     app.secret_key='secret123'

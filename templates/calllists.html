@@ -1,22 +1,26 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  <h1>Call List: <small> {{listname}}</small></h1>
+  <h1>Call Lists <small> Welcome {{session.username}}</small></h1>
   <a class="btn btn-success" href="/upload"> Upload New Call list</a>
   <hr>
   <table class="table table-striped">
     <tr>
-      <th>Name</th>
-      <th>Phone</th>
+      <th>ID</th>
+      <th>Call List</th>
+      <th>Created By</th>
+      <th>Date</th>
       <th></th>
       <th></th>
     </tr>
-    {% for calllist in calllists %}
+    {% for article in articles %}
       <tr>
-        <td>{{calllist.name}}</td>
-        <td>{{calllist.phone}}</td>
+        <td>{{article.id}}</td>
+        <td><a href="article/{{article.id}}">{{article.title}}</a></td>
+        <td>{{article.author}}</td>
+        <td>{{article.create_date}}</td>
         <td>
-          <form action="{{url_for('delete_single', listname=listname, id=calllist.id)}}" method="post">
+          <form action="{{url_for('delete_article', id=article.id)}}" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" value="Delete" class="btn btn-danger">
           </form>
